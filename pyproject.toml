@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "expensify-scraper"
+version = "0.1.0"
+description = "Bulk download Expensify receipt attachments organized by month and year"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "Aveya Ltd." }]
+keywords = ["expensify", "receipts", "expenses", "cli", "playwright", "backup"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Accounting",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "httpx>=0.28.0",
+    "playwright>=1.49.0",
+    "typer>=0.15.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "tenacity>=9.0.0",
+    "rich>=13.9.0",
+    "python-slugify>=8.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.8"]
+
+[project.urls]
+Homepage = "https://github.com/dave-hunt/expensify-scraper"
+Repository = "https://github.com/dave-hunt/expensify-scraper"
+Issues = "https://github.com/dave-hunt/expensify-scraper/issues"
+
+[project.scripts]
+expensify-scraper = "expensify_scraper.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+expensify_scraper = ["templates/*.ftl"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+# str+Enum mixins are serialized via .value; switching to StrEnum would change str().
+ignore = ["UP042"]

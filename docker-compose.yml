@@ -1,0 +1,23 @@
+x-scraper: &scraper
+  build: .
+  env_file:
+    - path: .env
+      required: false
+  volumes:
+    - ./data:/data
+    - ./out:/data/out
+    # Writable: download remints and re-saves API tokens.
+    - ./.auth:/data/.auth
+
+services:
+  expensify-scraper:
+    <<: *scraper
+    command: ["--help"]
+
+  download:
+    <<: *scraper
+    command: ["download"]
+
+  verify:
+    <<: *scraper
+    command: ["verify"]

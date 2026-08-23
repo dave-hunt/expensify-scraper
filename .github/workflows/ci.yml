@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      # The suite never launches a browser, so Playwright's browser binaries
+      # are not installed here.
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Lint
+        run: ruff check src tests
+
+      - name: Test
+        run: pytest -q
+
+  # A non-editable install is the only way to catch templates/ not shipping as
+  # package data; the editable install used above finds it either way.
+  wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install from wheel
+        run: pip install .
+
+      - name: Template resolves outside the source tree
+        working-directory: /tmp
+        run: |
+          python -c "
+          from expensify_scraper.config import get_settings
+          from expensify_scraper.template import load_template
+          load_template(get_settings().template_path)
+          print('template OK')
+          "
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t expensify-scraper:ci .
+
+      - name: Smoke test entrypoint
+        run: docker run --rm expensify-scraper:ci --help

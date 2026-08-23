@@ -1,0 +1,72 @@
+name: Bug report
+description: Something is not working as documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before you paste anything:** never include an `authToken`, a
+        `partnerUserSecret`, cookie values, or the contents of `.auth/`.
+        Replace them with `<redacted>`. Receipt URLs contain account-scoped
+        identifiers, so redact those too.
+
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      placeholder: expensify-scraper download
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include the redacted output or traceback.
+      render: text
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it?
+      options:
+        - pip install -e . (editable, from a clone)
+        - pip install . (non-editable)
+        - Docker / docker compose
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS and Python version
+      placeholder: macOS 15.1, Python 3.13.7
+    validations:
+      required: true
+
+  - type: textarea
+    id: status
+    attributes:
+      label: Output of `expensify-scraper status`
+      description: Optional, but it makes counts-related reports much easier to diagnose.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: redacted
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have removed all tokens, secrets, cookie values, and receipt URLs from this report.
+          required: true

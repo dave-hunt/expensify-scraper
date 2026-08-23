@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets and local state
+.env
+.auth/
+*.sqlite
+*.sqlite-journal
+
+# Output
+out/
+data/
+
+# Playwright
+playwright/.cache/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+.cursor/
+*.swp

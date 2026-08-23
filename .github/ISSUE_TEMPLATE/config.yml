@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/dave-hunt/expensify-scraper/security/advisories/new
+    about: Please report vulnerabilities privately, never as a public issue.
+  - name: Troubleshooting
+    url: https://github.com/dave-hunt/expensify-scraper#troubleshooting
+    about: Expired sessions, missing Chromium, and rate limiting are covered in the README.

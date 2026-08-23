@@ -1,0 +1,12 @@
+# Runtime dependencies for the Docker image, kept separate from pyproject.toml
+# so dependency installs cache independently of source changes.
+# Keep in sync with [project].dependencies.
+httpx>=0.28.0
+playwright>=1.49.0
+typer>=0.15.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+tenacity>=9.0.0
+rich>=13.9.0
+python-slugify>=8.0.0
+python-dotenv>=1.0.0
